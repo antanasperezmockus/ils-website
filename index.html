@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>it looks simple — Automatización de Finanzas y Operaciones</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --accent: #171717;
+      --accent-hover: #0a0a0a;
+      --accent-light: #f5f5f4;
+      --accent-subtle: #e7e5e4;
+      --dark: #0a0a0a;
+      --text: #525252;
+      --gray: #737373;
+      --light-gray: #fafaf9;
+      --white: #ffffff;
+      --border: #e7e5e4;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.06);
+      --shadow: 0 4px 6px rgba(0,0,0,0.04), 0 10px 20px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.06), 0 20px 48px rgba(0,0,0,0.08);
+      --radius: 16px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      background: var(--light-gray);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Language toggle */
+    [data-lang="en"] .es,
+    [data-lang="es"] .en { display: none; }
+
+    /* Scroll animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Layout */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(248,250,252,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 100;
+      padding: 18px 0;
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .lang-toggle {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 8px 18px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--gray);
+      transition: all 0.2s ease;
+      font-family: inherit;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .lang-toggle:hover {
+      background: var(--accent-light);
+      border-color: var(--accent-subtle);
+      color: var(--accent);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 64px;
+      text-align: center;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-label {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      background: var(--accent-light);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: 24px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      color: var(--dark);
+      letter-spacing: -0.03em;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--gray);
+      max-width: 540px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 10px 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-pill strong {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .stat-pill span {
+      font-size: 0.82rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+
+    /* Sections */
+    section { padding: 80px 0; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--dark);
+      letter-spacing: -0.02em;
+    }
+    .section-subtitle {
+      color: var(--gray);
+      margin-bottom: 40px;
+      font-size: 1.05rem;
+      max-width: 520px;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .about-item {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    .about-item:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+    .about-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--accent-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .about-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .about-item h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--dark);
+    }
+    .about-item p {
+      font-size: 0.9rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* Services */
+    .services-section {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .service-card {
+      background: var(--light-gray);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+    .service-card.featured {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+    .service-card.featured::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+    }
+    .service-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--white);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .service-card.featured .service-icon {
+      background: var(--accent);
+    }
+    .service-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .service-card.featured .service-icon svg {
+      stroke: var(--white);
+    }
+    .service-card .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .service-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--dark);
+    }
+    .service-card .price {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 16px;
+      white-space: nowrap;
+    }
+    .service-card .price .price-suffix {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--gray);
+    }
+    .service-card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .service-card li {
+      font-size: 0.88rem;
+      color: var(--gray);
+      padding: 5px 0;
+      padding-left: 24px;
+      position: relative;
+    }
+    .service-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 16px;
+      height: 16px;
+      background: var(--accent-light);
+      border-radius: 50%;
+    }
+    .service-card li::after {
+      content: "\2713";
+      position: absolute;
+      left: 3px;
+      top: 5px;
+      font-size: 0.65rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Case Studies */
+    .case-study {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    .case-study:hover {
+      box-shadow: var(--shadow);
+    }
+    .case-study:last-child { margin-bottom: 0; }
+    .case-study .case-number {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      background: var(--accent-light);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .case-study h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--dark);
+      letter-spacing: -0.01em;
+    }
+    .case-study .problem {
+      font-size: 0.92rem;
+      color: var(--gray);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+    }
+    .result-table th {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--light-gray);
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .result-table th:first-child { border-radius: 8px 0 0 8px; }
+    .result-table th:last-child { border-radius: 0 8px 8px 0; }
+    .result-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+    .result-table .before { color: var(--gray); }
+    .result-table .after {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .case-highlight {
+      background: var(--accent-light);
+      border-left: 3px solid var(--accent);
+      padding: 14px 20px;
+      border-radius: 0 12px 12px 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    /* CTA */
+    .cta-section {
+      padding: 0 24px;
+    }
+    .cta {
+      text-align: center;
+      padding: 64px 32px;
+      background: linear-gradient(135deg, #1c1917, #0a0a0a);
+      border-radius: 20px;
+      margin: 0 auto;
+      max-width: 860px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+    .cta::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+    .cta h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      position: relative;
+      z-index: 1;
+    }
+    .cta p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 28px;
+      font-size: 1.05rem;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-button {
+      display: inline-block;
+      background: var(--white);
+      color: var(--accent);
+      padding: 14px 36px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 1;
+    }
+    .cta-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--gray);
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (min-width: 640px) {
+      .hero h1 { font-size: 3.2rem; }
+      .hero { padding: 100px 0 80px; }
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+      .about-grid { grid-template-columns: repeat(2, 1fr); }
+      .section-title { font-size: 2rem; }
+    }
+
+    @media (max-width: 380px) {
+      .stat-pill { padding: 8px 14px; }
+      .stat-pill strong { font-size: 1rem; }
+      .hero h1 { font-size: 1.8rem; }
+      .service-card .price { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body data-lang="es">
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="#" class="logo">it looks simple</a>
+      <button class="lang-toggle" onclick="toggleLang()">
+        <span class="es">EN</span>
+        <span class="en">ES</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-label">
+        <span class="es">Automatización de procesos</span>
+        <span class="en">Process automation</span>
+      </div>
+      <h1>
+        <span class="es">Automatizamos las finanzas y operaciones de tu empresa</span>
+        <span class="en">We automate your business finances and operations</span>
+      </h1>
+      <p>
+        <span class="es">Identificamos los procesos que puedes automatizar y los implementamos por ti. Menos tareas manuales, menos errores, más tiempo para hacer crecer tu negocio.</span>
+        <span class="en">We identify the processes you can automate and implement them for you. Less manual work, fewer errors, more time to grow your business.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section>
+    <div class="container">
+      <div class="fade-in">
+        <span class="section-label">
+          <span class="es">Nuestras soluciones</span>
+          <span class="en">Our solutions</span>
+        </span>
+        <h2 class="section-title">
+          <span class="es">Qué hacemos</span>
+          <span class="en">What we do</span>
+        </h2>
+        <p class="section-subtitle">
+          <span class="es">Nos especializamos en automatizar los procesos de finanzas, contabilidad y operaciones de tu empresa.</span>
+          <span class="en">We specialize in automating finance, accounting, and operations processes for your business.</span>
+        </p>
+      </div>
+      <div class="about-grid">
+        <div class="about-item fade-in">
+          <div class="about-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>
+            <span class="es">Conciliaciones</span>
+            <span class="en">Reconciliations</span>
+          </h3>
+          <p>
+            <span class="es">Ventas, cobros, y bancos sincronizados automáticamente con tu contabilidad.</span>
+            <span class="en">Sales, payments, and banks automatically synced with your accounting.</span>
+          </p>
+        </div>
+        <div class="about-item fade-in">
+          <div class="about-icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3>
+            <span class="es">Facturación</span>
+            <span class="en">Invoicing</span>
+          </h3>
+          <p>
+            <span class="es">Generación automática de facturas. Lectura y procesamiento automático de facturas recibidas.</span>
+            <span class="en">Automatic invoice generation. Automatic reading and processing of received invoices.</span>
+          </p>
+        </div>
+        <div class="about-item fade-in">
+          <div class="about-icon">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/></svg>
+          </div>
+          <h3>
+            <span class="es">Reporting financiero</span>
+            <span class="en">Financial reporting</span>
+          </h3>
+          <p>
+            <span class="es">Estados financieros, márgenes, y dashboards generados automáticamente.</span>
+            <span class="en">Financial statements, margins, and dashboards generated automatically.</span>
+          </p>
+        </div>
+        <div class="about-item fade-in">
+          <div class="about-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+          </div>
+          <h3>
+            <span class="es">Pagos y costes</span>
+            <span class="en">Payments & costs</span>
+          </h3>
+          <p>
+            <span class="es">Cálculo y gestión automática de pagos a proveedores, comisiones, e IVA.</span>
+            <span class="en">Automatic calculation and management of vendor payments, commissions, and VAT.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services-section">
+    <div class="container">
+      <div class="fade-in">
+        <span class="section-label">
+          <span class="es">Cómo trabajamos</span>
+          <span class="en">How we work</span>
+        </span>
+        <h2 class="section-title">
+          <span class="es">Servicios</span>
+          <span class="en">Services</span>
+        </h2>
+        <p class="section-subtitle">
+          <span class="es">Un proceso claro: primero analizamos, después implementamos.</span>
+          <span class="en">A clear process: first we analyze, then we implement.</span>
+        </p>
+      </div>
+      <div class="services-grid">
+        <!-- Audit -->
+        <div class="service-card featured fade-in">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <span class="tag">
+            <span class="es">Punto de entrada</span>
+            <span class="en">Starting point</span>
+          </span>
+          <h3>
+            <span class="es">Audit de Automatización</span>
+            <span class="en">Automation Audit</span>
+          </h3>
+          <div class="price">299 &euro; <span class="price-suffix"><span class="es">+IVA</span><span class="en">+VAT</span></span></div>
+          <ul>
+            <li>
+              <span class="es">Mapeo completo de procesos financieros y operativos</span>
+              <span class="en">Full mapping of financial and operational processes</span>
+            </li>
+            <li>
+              <span class="es">Informe con ROI de cada automatización</span>
+              <span class="en">Report with ROI for each automation</span>
+            </li>
+            <li>
+              <span class="es">Lista clara de prioridades</span>
+              <span class="en">Clear priority list</span>
+            </li>
+            <li>
+              <span class="es">Entrega en 5-7 días laborables</span>
+              <span class="en">Delivered in 5-7 business days</span>
+            </li>
+          </ul>
+        </div>
+        <!-- Implementation -->
+        <div class="service-card fade-in">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <span class="tag">
+            <span class="es">Implementación</span>
+            <span class="en">Implementation</span>
+          </span>
+          <h3>
+            <span class="es">Automatización a medida</span>
+            <span class="en">Custom automation</span>
+          </h3>
+          <div class="price">900-4.900 &euro; <span class="price-suffix"><span class="es">+IVA</span><span class="en">+VAT</span></span></div>
+          <ul>
+            <li>
+              <span class="es">Implementación llave en mano</span>
+              <span class="en">Turnkey implementation</span>
+            </li>
+            <li>
+              <span class="es">1 o varios procesos automatizados</span>
+              <span class="en">One or multiple automated processes</span>
+            </li>
+            <li>
+              <span class="es">Documentación completa</span>
+              <span class="en">Full documentation</span>
+            </li>
+            <li>
+              <span class="es">Formación del equipo</span>
+              <span class="en">Team training</span>
+            </li>
+            <li>
+              <span class="es">30 días de soporte incluido</span>
+              <span class="en">30 days support included</span>
+            </li>
+          </ul>
+        </div>
+        <!-- Retainer -->
+        <div class="service-card fade-in">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <span class="tag">
+            <span class="es">Continuo</span>
+            <span class="en">Ongoing</span>
+          </span>
+          <h3>
+            <span class="es">Retainer mensual</span>
+            <span class="en">Monthly retainer</span>
+          </h3>
+          <div class="price">1.000-2.000 &euro;<span class="price-suffix"><span class="es">/mes +IVA</span><span class="en">/mo +VAT</span></span></div>
+          <ul>
+            <li>
+              <span class="es">1-2 automatizaciones nuevas al mes</span>
+              <span class="en">1-2 new automations per month</span>
+            </li>
+            <li>
+              <span class="es">Optimización de las existentes</span>
+              <span class="en">Optimization of existing ones</span>
+            </li>
+            <li>
+              <span class="es">Soporte prioritario</span>
+              <span class="en">Priority support</span>
+            </li>
+            <li>
+              <span class="es">Sin compromiso mínimo</span>
+              <span class="en">No minimum commitment</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Studies -->
+  <section>
+    <div class="container">
+      <div class="fade-in">
+        <span class="section-label">
+          <span class="es">Resultados reales</span>
+          <span class="en">Real results</span>
+        </span>
+        <h2 class="section-title">
+          <span class="es">Casos de estudio</span>
+          <span class="en">Case studies</span>
+        </h2>
+        <p class="section-subtitle">
+          <span class="es">Resultados reales de proyectos que hemos implementado.</span>
+          <span class="en">Real results from projects we have implemented.</span>
+        </p>
+      </div>
+
+      <!-- Case 1 -->
+      <div class="case-study fade-in">
+        <div class="case-number">
+          <span class="es">Caso 1</span>
+          <span class="en">Case 1</span>
+        </div>
+        <h3>
+          <span class="es">Generación automática de estados financieros</span>
+          <span class="en">Automatic financial statement generation</span>
+        </h3>
+        <p class="problem">
+          <span class="es">Empresa de servicios en Londres con múltiples fuentes de ingresos y canales. Una persona dedicaba 15 días al mes a recopilar ingresos y generar los estados financieros de forma manual.</span>
+          <span class="en">Service company in London with multiple revenue streams and channels. One person spent 15 days per month manually compiling income and generating financial statements.</span>
+        </p>
+        <table class="result-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th><span class="es">Antes</span><span class="en">Before</span></th>
+              <th><span class="es">Después</span><span class="en">After</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="es">Tiempo dedicado</span><span class="en">Time spent</span></td>
+              <td class="before"><span class="es">15 días/mes</span><span class="en">15 days/month</span></td>
+              <td class="after"><span class="es">2 días/mes</span><span class="en">2 days/month</span></td>
+            </tr>
+            <tr>
+              <td><span class="es">Frecuencia</span><span class="en">Frequency</span></td>
+              <td class="before"><span class="es">Mensual, con retraso</span><span class="en">Monthly, with delays</span></td>
+              <td class="after"><span class="es">Semanal, al instante</span><span class="en">Weekly, instant</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="case-highlight">
+          <span class="es">Ahorro: 13 días de trabajo al mes</span>
+          <span class="en">Savings: 13 working days per month</span>
+        </div>
+      </div>
+
+      <!-- Case 2 -->
+      <div class="case-study fade-in">
+        <div class="case-number">
+          <span class="es">Caso 2</span>
+          <span class="en">Case 2</span>
+        </div>
+        <h3>
+          <span class="es">Validación de transacciones, comisiones y costes</span>
+          <span class="en">Transaction validation, commissions and costs</span>
+        </h3>
+        <p class="problem">
+          <span class="es">Más de 500 transacciones al mes desde múltiples canales. Cada una requería validación manual, cálculo de comisiones por plataforma, cálculo de costes, y envío a contabilidad.</span>
+          <span class="en">Over 500 transactions per month from multiple channels. Each required manual validation, platform commission calculation, cost calculation, and submission to accounting.</span>
+        </p>
+        <table class="result-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th><span class="es">Antes</span><span class="en">Before</span></th>
+              <th><span class="es">Después</span><span class="en">After</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="es">Procesamiento</span><span class="en">Processing</span></td>
+              <td class="before"><span class="es">500/mes — a mano</span><span class="en">500/month — by hand</span></td>
+              <td class="after"><span class="es">500/mes — automático</span><span class="en">500/month — automatic</span></td>
+            </tr>
+            <tr>
+              <td><span class="es">Errores en comisiones</span><span class="en">Commission errors</span></td>
+              <td class="before"><span class="es">Frecuentes</span><span class="en">Frequent</span></td>
+              <td class="after"><span class="es">Cero</span><span class="en">Zero</span></td>
+            </tr>
+            <tr>
+              <td><span class="es">Tiempo</span><span class="en">Time</span></td>
+              <td class="before"><span class="es">Días</span><span class="en">Days</span></td>
+              <td class="after"><span class="es">Minutos</span><span class="en">Minutes</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="case-highlight">
+          <span class="es">De perseguir datos a simplemente revisar y aprobar</span>
+          <span class="en">From chasing data to simply reviewing and approving</span>
+        </div>
+      </div>
+
+      <!-- Case 3 -->
+      <div class="case-study fade-in">
+        <div class="case-number">
+          <span class="es">Caso 3</span>
+          <span class="en">Case 3</span>
+        </div>
+        <h3>
+          <span class="es">Pagos, facturas y mantenimiento</span>
+          <span class="en">Payments, invoices and maintenance</span>
+        </h3>
+        <p class="problem">
+          <span class="es">Empresa con múltiples proveedores de servicios. Más de 100 facturas al mes se leían e introducían a mano. Cálculos de pagos manuales, propensos a errores.</span>
+          <span class="en">Company with multiple service providers. Over 100 invoices per month were read and entered manually. Manual payment calculations, prone to errors.</span>
+        </p>
+        <table class="result-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th><span class="es">Antes</span><span class="en">Before</span></th>
+              <th><span class="es">Después</span><span class="en">After</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="es">Facturas procesadas</span><span class="en">Invoices processed</span></td>
+              <td class="before"><span class="es">100/mes — a mano</span><span class="en">100/month — by hand</span></td>
+              <td class="after"><span class="es">100/mes — automático</span><span class="en">100/month — automatic</span></td>
+            </tr>
+            <tr>
+              <td><span class="es">Errores en pagos</span><span class="en">Payment errors</span></td>
+              <td class="before"><span class="es">Habituales</span><span class="en">Common</span></td>
+              <td class="after"><span class="es">Eliminados</span><span class="en">Eliminated</span></td>
+            </tr>
+            <tr>
+              <td><span class="es">Reportes</span><span class="en">Reports</span></td>
+              <td class="before"><span class="es">Manuales, con retraso</span><span class="en">Manual, delayed</span></td>
+              <td class="after"><span class="es">Automáticos, en tiempo real</span><span class="en">Automatic, real-time</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="case-highlight">
+          <span class="es">Lectura automática de facturas y cálculo de pagos sin intervención</span>
+          <span class="en">Automatic invoice reading and payment calculation without intervention</span>
+        </div>
+      </div>
+
+      <!-- Case 4 -->
+      <div class="case-study fade-in">
+        <div class="case-number">
+          <span class="es">Caso 4</span>
+          <span class="en">Case 4</span>
+        </div>
+        <h3>
+          <span class="es">Sistema de gestión de inventario desde cero</span>
+          <span class="en">Inventory management system from scratch</span>
+        </h3>
+        <p class="problem">
+          <span class="es">Empresa de mobiliario sin sistema de control de stock. El inventario se gestionaba manualmente y se perdía producto con frecuencia. No había forma fiable de saber qué había disponible para vender.</span>
+          <span class="en">Furniture company with no stock control system. Inventory was managed manually and product was frequently lost. There was no reliable way to know what was available to sell.</span>
+        </p>
+        <table class="result-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th><span class="es">Antes</span><span class="en">Before</span></th>
+              <th><span class="es">Después</span><span class="en">After</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="es">Control de stock</span><span class="en">Stock control</span></td>
+              <td class="before"><span class="es">Manual, sin sistema</span><span class="en">Manual, no system</span></td>
+              <td class="after"><span class="es">Automático por cada movimiento</span><span class="en">Automatic per movement</span></td>
+            </tr>
+            <tr>
+              <td><span class="es">Visibilidad de disponibilidad</span><span class="en">Availability visibility</span></td>
+              <td class="before"><span class="es">Desconocida</span><span class="en">Unknown</span></td>
+              <td class="after"><span class="es">En tiempo real</span><span class="en">Real-time</span></td>
+            </tr>
+            <tr>
+              <td><span class="es">Pérdida de producto</span><span class="en">Product loss</span></td>
+              <td class="before"><span class="es">Frecuente</span><span class="en">Frequent</span></td>
+              <td class="after"><span class="es">Eliminada</span><span class="en">Eliminated</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="case-highlight">
+          <span class="es">De no saber qué había en stock a tener control total con actualizaciones automáticas por cada entrada, venta y devolución</span>
+          <span class="en">From not knowing what was in stock to full control with automatic updates for every arrival, sale and return</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta fade-in">
+      <h2>
+        <span class="es">¿Quieres saber qué puedes automatizar?</span>
+        <span class="en">Want to know what you can automate?</span>
+      </h2>
+      <p>
+        <span class="es">Reserva una llamada de 15 minutos. Sin compromiso.</span>
+        <span class="en">Book a 15-minute call. No commitment.</span>
+      </p>
+      <a href="mailto:antanas@itlookssimple.com" class="cta-button">
+        <span class="es">Contactar</span>
+        <span class="en">Get in touch</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>it looks simple &copy; 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleLang() {
+      const body = document.body;
+      const current = body.getAttribute('data-lang');
+      body.setAttribute('data-lang', current === 'es' ? 'en' : 'es');
+    }
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
