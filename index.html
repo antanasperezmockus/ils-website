@@ -396,11 +396,16 @@
       margin-bottom: 24px;
       line-height: 1.7;
     }
+    .result-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 20px;
+    }
     .result-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 0.85rem;
-      margin-bottom: 20px;
+      min-width: 320px;
     }
     .result-table th {
       text-align: left;
@@ -520,11 +525,20 @@
       .section-title { font-size: 2rem; }
     }
 
-    @media (max-width: 380px) {
-      .stat-pill { padding: 8px 14px; }
-      .stat-pill strong { font-size: 1rem; }
+    @media (max-width: 420px) {
       .hero h1 { font-size: 1.8rem; }
+      .case-study { padding: 20px 16px; }
+      .case-study h3 { font-size: 1.05rem; }
+      .case-study .problem { font-size: 0.85rem; }
+      .result-table { font-size: 0.78rem; }
+      .result-table th { padding: 8px 6px; font-size: 0.7rem; }
+      .result-table td { padding: 8px 6px; font-size: 0.78rem; }
+      .case-highlight { font-size: 0.85rem; padding: 12px 14px; }
       .service-card .price { font-size: 1.15rem; }
+      .service-card { padding: 20px 16px; }
+      .about-item { padding: 20px 16px; }
+      .section-title { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
     }
   </style>
 </head>
@@ -790,7 +804,7 @@
           <span class="es">Empresa de servicios en Londres con múltiples fuentes de ingresos y canales. Una persona dedicaba 15 días al mes a recopilar ingresos y generar los estados financieros de forma manual.</span>
           <span class="en">Service company in London with multiple revenue streams and channels. One person spent 15 days per month manually compiling income and generating financial statements.</span>
         </p>
-        <table class="result-table">
+        <div class="result-table-wrap"><table class="result-table">
           <thead>
             <tr>
               <th></th>
@@ -810,7 +824,7 @@
               <td class="after"><span class="es">Semanal, al instante</span><span class="en">Weekly, instant</span></td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
         <div class="case-highlight">
           <span class="es">Ahorro: 13 días de trabajo al mes</span>
           <span class="en">Savings: 13 working days per month</span>
@@ -831,7 +845,7 @@
           <span class="es">Más de 500 transacciones al mes desde múltiples canales. Cada una requería validación manual, cálculo de comisiones por plataforma, cálculo de costes, y envío a contabilidad.</span>
           <span class="en">Over 500 transactions per month from multiple channels. Each required manual validation, platform commission calculation, cost calculation, and submission to accounting.</span>
         </p>
-        <table class="result-table">
+        <div class="result-table-wrap"><table class="result-table">
           <thead>
             <tr>
               <th></th>
@@ -846,7 +860,7 @@
               <td class="after"><span class="es">500/mes — automático</span><span class="en">500/month — automatic</span></td>
             </tr>
             <tr>
-              <td><span class="es">Errores en comisiones</span><span class="en">Commission errors</span></td>
+              <td><span class="es">Errores</span><span class="en">Errors</span></td>
               <td class="before"><span class="es">Frecuentes</span><span class="en">Frequent</span></td>
               <td class="after"><span class="es">Cero</span><span class="en">Zero</span></td>
             </tr>
@@ -856,7 +870,7 @@
               <td class="after"><span class="es">Minutos</span><span class="en">Minutes</span></td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
         <div class="case-highlight">
           <span class="es">De perseguir datos a simplemente revisar y aprobar</span>
           <span class="en">From chasing data to simply reviewing and approving</span>
@@ -877,7 +891,7 @@
           <span class="es">Empresa con múltiples proveedores de servicios. Más de 100 facturas al mes se leían e introducían a mano. Cálculos de pagos manuales, propensos a errores.</span>
           <span class="en">Company with multiple service providers. Over 100 invoices per month were read and entered manually. Manual payment calculations, prone to errors.</span>
         </p>
-        <table class="result-table">
+        <div class="result-table-wrap"><table class="result-table">
           <thead>
             <tr>
               <th></th>
@@ -902,7 +916,7 @@
               <td class="after"><span class="es">Automáticos, en tiempo real</span><span class="en">Automatic, real-time</span></td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
         <div class="case-highlight">
           <span class="es">Lectura automática de facturas y cálculo de pagos sin intervención</span>
           <span class="en">Automatic invoice reading and payment calculation without intervention</span>
@@ -923,7 +937,7 @@
           <span class="es">Empresa de mobiliario sin sistema de control de stock. El inventario se gestionaba manualmente y se perdía producto con frecuencia. No había forma fiable de saber qué había disponible para vender.</span>
           <span class="en">Furniture company with no stock control system. Inventory was managed manually and product was frequently lost. There was no reliable way to know what was available to sell.</span>
         </p>
-        <table class="result-table">
+        <div class="result-table-wrap"><table class="result-table">
           <thead>
             <tr>
               <th></th>
@@ -935,10 +949,10 @@
             <tr>
               <td><span class="es">Control de stock</span><span class="en">Stock control</span></td>
               <td class="before"><span class="es">Manual, sin sistema</span><span class="en">Manual, no system</span></td>
-              <td class="after"><span class="es">Automático por cada movimiento</span><span class="en">Automatic per movement</span></td>
+              <td class="after"><span class="es">Automático</span><span class="en">Automatic</span></td>
             </tr>
             <tr>
-              <td><span class="es">Visibilidad de disponibilidad</span><span class="en">Availability visibility</span></td>
+              <td><span class="es">Disponibilidad</span><span class="en">Availability</span></td>
               <td class="before"><span class="es">Desconocida</span><span class="en">Unknown</span></td>
               <td class="after"><span class="es">En tiempo real</span><span class="en">Real-time</span></td>
             </tr>
@@ -948,7 +962,7 @@
               <td class="after"><span class="es">Eliminada</span><span class="en">Eliminated</span></td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
         <div class="case-highlight">
           <span class="es">De no saber qué había en stock a tener control total con actualizaciones automáticas por cada entrada, venta y devolución</span>
           <span class="en">From not knowing what was in stock to full control with automatic updates for every arrival, sale and return</span>
